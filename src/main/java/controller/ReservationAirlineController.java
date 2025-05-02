@@ -25,10 +25,10 @@ public class ReservationAirlineController {
     public Response createReservation(ReservationRequestDTO dto) {
         LOGGER.info("Iniciando reserva con el dto: {}", dto);
         boolean success = this.airlineServices.createReservation(dto);
-        if (success) 
+        if (success)
             return Response.status(Response.Status.CREATED).entity("Reserva iniciada con exito").build();
-        else 
-            return Response.status(Response.Status.BAD_REQUEST).entity("No se ha podido hacer la").build();
+
+        return Response.status(Response.Status.BAD_REQUEST).entity("No se ha podido hacer la reserva").build();
     }
 
     @Inject
