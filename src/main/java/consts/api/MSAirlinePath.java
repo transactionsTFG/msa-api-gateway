@@ -17,4 +17,5 @@ public enum MSAirlinePath {
     public String getFullPath() {
         return HttpsConsts.URL_AIRLINE + path;
     }
+
 }
