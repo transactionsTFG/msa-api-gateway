@@ -6,6 +6,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import business.flight.FlightParamsDTO;
 import consts.HttpsConsts;
 
 @Stateless
@@ -29,6 +30,18 @@ public class FlightApiClientImpl implements FlightApiClient {
     @Inject
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    @Override
+    public Response getFlightByParams(FlightParamsDTO params) {
+        return this.client.target(PATH)
+                .queryParam("countryOrigin", params.getCountryOrigin())
+                .queryParam("countryDestination", params.getCountryDestination())
+                .queryParam("cityOrigin", params.getCityOrigin())
+                .queryParam("cityDestination", params.getCityDestination())
+                .queryParam("dateOrigin", params.getDateOrigin())
+                .request(MediaType.APPLICATION_JSON)
+                .get();
     }
     
 }
