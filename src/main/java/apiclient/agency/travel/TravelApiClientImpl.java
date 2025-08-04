@@ -1,8 +1,8 @@
 package apiclient.agency.travel;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -17,8 +17,22 @@ import msa.commons.controller.hotel.booking.CreateHotelBookingDTO;
 
 @Stateless
 public class TravelApiClientImpl implements TravelApiClient {
-    private static final String PATH = HttpsConsts.URL_AGENCY  + "/msa-travel/reservation";
-    private final Client client = ClientBuilder.newClient();
+    private static final String PATH = HttpsConsts.URL_AGENCY  + "/msa-travel/api/travel/reservation";
+    private Client client;
+
+    @Override
+    public Response getTravelById(long id) {
+        return this.client.target(PATH + "/" + id)
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+    }
+
+    @Override
+    public Response getTravelByIdUser(long idUser) {
+        return this.client.target(PATH + "/user/" + idUser)
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+    }
 
     @Override
     public Response createReservation(ReservationAirlineRequestDTO dto) {
@@ -83,6 +97,8 @@ public class TravelApiClientImpl implements TravelApiClient {
                 .delete();
     }
 
-
-
+    @Inject
+    public void setClient(Client client) {
+        this.client = client;
+    }
 }

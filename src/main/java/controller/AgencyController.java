@@ -14,9 +14,11 @@ import msa.commons.controller.hotel.booking.CreateHotelBookingDTO;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -27,6 +29,20 @@ import javax.ws.rs.core.Response;
 public class AgencyController {
     private static final Logger LOGGER = LogManager.getLogger(AgencyController.class);
     private TravelApiClient travelApiClient;
+
+    @GET
+    @Path("/travel/{id}")
+    public Response getTravelById(@PathParam("id") long id) {
+        LOGGER.info("Fetching travel information for ID: {}", id);
+        return travelApiClient.getTravelById(id);
+    }
+
+    @GET
+    @Path("/travel/user/{idUser}")
+    public Response getTravelByIdUser(@PathParam("idUser") long idUser) {
+        LOGGER.info("Fetching travel information for user ID: {}", idUser);
+        return travelApiClient.getTravelByIdUser(idUser);
+    }
 
     @POST
     @Path("/create/airline")

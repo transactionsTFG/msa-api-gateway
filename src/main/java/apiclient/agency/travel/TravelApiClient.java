@@ -10,6 +10,8 @@ import msa.commons.controller.agency.reservationbooking.CreateAirlineAndHotelRes
 import msa.commons.controller.hotel.booking.CreateHotelBookingDTO;
 
 public interface TravelApiClient {
+    Response getTravelById(long id);
+    Response getTravelByIdUser(long idUser);
     Response createReservation(ReservationAirlineRequestDTO dto);
     Response createBooking(CreateHotelBookingDTO dto);
     Response createReservationAndBooking(CreateAirlineAndHotelReservationDTO dto);
