@@ -7,6 +7,11 @@ import apiclient.agency.travel.TravelApiClient;
 import business.travel.UpdateHotelBookingDTO;
 import business.travel.UpdateReservationBookingDTO;
 import business.travel.UpdateReservationDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import msa.commons.controller.agency.reservationairline.ReservationAirlineRequestDTO;
 import msa.commons.controller.agency.reservationbooking.CreateAirlineAndHotelReservationDTO;
 import msa.commons.controller.hotel.booking.CreateHotelBookingDTO;
@@ -24,6 +29,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("/agency")
+@Tag(name = "Agencia", description = "Orquestador de operaciones de viaje")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class AgencyController {
@@ -32,6 +38,16 @@ public class AgencyController {
 
     @GET
     @Path("/travel/{id}")
+    @Operation(
+        summary = "Obtener viaje por ID",
+        parameters = {
+            @Parameter(name = "id", in = ParameterIn.PATH, required = true, description = "Identificador del viaje")
+        },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Viaje encontrado"),
+            @ApiResponse(responseCode = "404", description = "Viaje no encontrado")
+        }
+    )
     public Response getTravelById(@PathParam("id") long id) {
         LOGGER.info("Fetching travel information for ID: {}", id);
         return travelApiClient.getTravelById(id);
@@ -39,6 +55,15 @@ public class AgencyController {
 
     @GET
     @Path("/travel/user/{idUser}")
+     @Operation(
+        summary = "Obtener viajes por ID de usuario",
+        parameters = {
+            @Parameter(name = "idUser", in = ParameterIn.PATH,	required = true, description = "Identificador del usuario")
+        },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Lista de viajes obtenida")
+        }
+    )
     public Response getTravelByIdUser(@PathParam("idUser") long idUser) {
         LOGGER.info("Fetching travel information for user ID: {}", idUser);
         return travelApiClient.getTravelByIdUser(idUser);
@@ -46,6 +71,9 @@ public class AgencyController {
 
     @POST
     @Path("/create/airline")
+    @Operation(summary = "Crear reserva de avión", responses = {
+        @ApiResponse(responseCode = "201", description = "Reserva de avión creada")
+    })
     public Response createAirlineAndHotelReservation(ReservationAirlineRequestDTO dto) {
         LOGGER.info("Creating airline reservation: {}", dto);
         return travelApiClient.createReservation(dto);
@@ -53,6 +81,9 @@ public class AgencyController {
 
     @POST
     @Path("/create/hotel")
+     @Operation(summary = "Crear reserva de hotel", responses = {
+        @ApiResponse(responseCode = "201", description = "Reserva de hotel creada")
+    })
     public Response createHotelReservation(CreateHotelBookingDTO dto) {
         LOGGER.info("Creating hotel reservation: {}", dto);
         return travelApiClient.createBooking(dto);
@@ -60,6 +91,9 @@ public class AgencyController {
 
     @POST
     @Path("/create/hotel-airline")
+    @Operation(summary = "Crear reserva combinada hotel + avión", responses = {
+        @ApiResponse(responseCode = "201", description = "Reserva combinada creada")
+    })
     public Response createAirlineAndHotelReservation(CreateAirlineAndHotelReservationDTO dto) {
         LOGGER.info("Creating airline and hotel reservation: {}", dto);
         return travelApiClient.createReservationAndBooking(dto);
@@ -67,6 +101,9 @@ public class AgencyController {
 
     @PUT
     @Path("/update/airline")
+    @Operation(summary = "Actualizar reserva de avión", responses = {
+        @ApiResponse(responseCode = "200", description = "Reserva de avión actualizada")
+    })
     public Response updateAirlineReservation(UpdateReservationDTO dto) {
         LOGGER.info("Updating airline reservation: {}", dto);
         return travelApiClient.updateReservation(dto);
@@ -74,6 +111,9 @@ public class AgencyController {
 
     @PUT
     @Path("/update/hotel")
+    @Operation(summary = "Actualizar reserva de hotel", responses = {
+        @ApiResponse(responseCode = "200", description = "Reserva de hotel actualizada")
+    })
     public Response updateHotelBooking(UpdateHotelBookingDTO dto) {
         LOGGER.info("Updating hotel booking: {}", dto);
         return travelApiClient.updateBooking(dto);
@@ -81,6 +121,9 @@ public class AgencyController {
 
     @PUT
     @Path("/update/hotel-airline")
+    @Operation(summary = "Actualizar reserva combinada hotel + avión", responses = {
+        @ApiResponse(responseCode = "200", description = "Reserva combinada actualizada")
+    })
     public Response updateAirlineAndHotelReservation(UpdateReservationBookingDTO dto) {
         LOGGER.info("Updating airline and hotel reservation: {}", dto);
         return travelApiClient.updateReservationAndBooking(dto);
@@ -88,6 +131,9 @@ public class AgencyController {
 
     @DELETE
     @Path("/delete/airline")
+    @Operation(summary = "Eliminar reserva de avión", responses = {
+        @ApiResponse(responseCode = "200", description = "Reserva de avión eliminada")
+    })
     public Response deleteAirlineReservation(long reservationId) {
         LOGGER.info("Deleting airline reservation with ID: {}", reservationId);
         return travelApiClient.deleteReservation(reservationId);
@@ -95,6 +141,9 @@ public class AgencyController {
 
     @DELETE
     @Path("/delete/hotel")
+    @Operation(summary = "Eliminar reserva de hotel", responses = {
+        @ApiResponse(responseCode = "200", description = "Reserva de hotel eliminada")
+    })
     public Response deleteHotelBooking(long bookingId) {
         LOGGER.info("Deleting hotel booking with ID: {}", bookingId);
         return travelApiClient.deleteBooking(bookingId);
@@ -102,6 +151,9 @@ public class AgencyController {
 
     @DELETE
     @Path("/delete/hotel-airline/{reservationId}/{bookingId}")
+    @Operation(summary = "Eliminar reserva combinada hotel + avión", responses = {
+        @ApiResponse(responseCode = "200", description = "Reserva combinada eliminada")
+    })
     public Response deleteAirlineAndHotelReservation(@PathParam("reservationId") long reservationId, @PathParam("bookingId") long bookingId) {
         LOGGER.info("Deleting airline reservation with ID: {} and hotel booking with ID: {}", reservationId, bookingId);
         return travelApiClient.deleteReservationAndBooking(reservationId, bookingId);

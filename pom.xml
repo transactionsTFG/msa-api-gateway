@@ -63,6 +63,21 @@
     <artifactId>msa-commons</artifactId>
     <version>1.1.0</version>
    </dependency>
+   <dependency>
+    <groupId>io.swagger.core.v3</groupId>
+    <artifactId>swagger-jaxrs2</artifactId>
+    <version>2.1.12</version>
+</dependency>
+<dependency>
+    <groupId>io.swagger.core.v3</groupId>
+    <artifactId>swagger-integration</artifactId>
+    <version>2.1.12</version>
+</dependency>
+<dependency>
+    <groupId>com.fasterxml.jackson.jaxrs</groupId>
+    <artifactId>jackson-jaxrs-json-provider</artifactId>
+    <version>2.13.3</version>
+</dependency>
   </dependencies>
   <build>
     <finalName>msa-api-gateway</finalName>
@@ -72,6 +87,21 @@
             <artifactId>maven-war-plugin</artifactId>
             <version>3.3.1</version>
         </plugin>
+        <plugin>
+        <groupId>io.swagger.core.v3</groupId><artifactId>swagger-maven-plugin</artifactId><version>2.1.12</version>
+        <executions>
+          <execution>
+            <phase>compile</phase><goals><goal>resolve</goal></goals>
+            <configuration>
+              <resourcePackages>
+                <package>controller</package>
+              </resourcePackages>
+              <outputFileName>openapi</outputFileName>
+              <outputPath>${project.build.directory}/generated/swagger</outputPath>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
 </build>
 	

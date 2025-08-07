@@ -14,8 +14,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import apiclient.agency.hotel.RoomApiClient;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Path("/room")
+@Tag(name = "Room", description = "Operaciones de habitaciones")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class RoomController {
@@ -24,6 +30,16 @@ public class RoomController {
 
     @GET
     @Path("/{id}")
+    @Operation(
+        summary = "Obtener una habitación por ID",
+        parameters = {
+            @Parameter(name = "id", in = ParameterIn.PATH, required = true, description = "Identificador de la habitación")
+        },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Habitación encontrada"),
+            @ApiResponse(responseCode = "404", description = "Habitación no encontrada")
+        }
+    )
     public Response getRoomById(@PathParam("id") long id) {
         LOGGER.info("Fetching room information for ID: {}", id);
         return roomApiClient.getRoomById(id);
@@ -31,6 +47,16 @@ public class RoomController {
 
     @GET
     @Path("/params")
+     @Operation(
+        summary = "Buscar habitaciones por país y nombre del hotel",
+        parameters = {
+            @Parameter(name = "country", in = ParameterIn.QUERY, description = "País donde se ubica el hotel"),
+            @Parameter(name = "nameHotel", in = ParameterIn.QUERY, description = "Nombre del hotel")
+        },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Lista de habitaciones obtenida")
+        }
+    )
     public Response getRoomByCountryAndNameHotel(@QueryParam("country") String country, @QueryParam("nameHotel") String nameHotel) {
         LOGGER.info("Fetching room information for country: {}, hotel name: {}", country, nameHotel);
         return roomApiClient.getRoomByCountryAndNameHotel(country, nameHotel);

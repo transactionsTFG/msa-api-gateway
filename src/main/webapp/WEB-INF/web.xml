@@ -8,5 +8,16 @@
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-
+    <servlet>
+            <servlet-name>OpenApi</servlet-name>
+            <servlet-class>io.swagger.v3.jaxrs2.integration.OpenApiServlet</servlet-class>
+            <init-param>
+                <param-name>openApi.configuration.resourcePackages</param-name>
+                <param-value></param-value>
+            </init-param>
+    </servlet>
+    <servlet-mapping>
+            <servlet-name>OpenApi</servlet-name>
+            <url-pattern>/openapi/*</url-pattern>
+    </servlet-mapping>
 </web-app>
