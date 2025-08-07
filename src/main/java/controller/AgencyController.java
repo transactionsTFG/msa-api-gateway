@@ -101,8 +101,8 @@ public class AgencyController {
     }
 
     @DELETE
-    @Path("/delete/hotel-airline")
-    public Response deleteAirlineAndHotelReservation(long reservationId, long bookingId) {
+    @Path("/delete/hotel-airline/{reservationId}/{bookingId}")
+    public Response deleteAirlineAndHotelReservation(@PathParam("reservationId") long reservationId, @PathParam("bookingId") long bookingId) {
         LOGGER.info("Deleting airline reservation with ID: {} and hotel booking with ID: {}", reservationId, bookingId);
         return travelApiClient.deleteReservationAndBooking(reservationId, bookingId);
     }

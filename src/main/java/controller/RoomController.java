@@ -6,6 +6,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -30,7 +31,7 @@ public class RoomController {
 
     @GET
     @Path("/params")
-    public Response getRoomByCountryAndNameHotel(@PathParam("country") String country, @PathParam("nameHotel") String nameHotel) {
+    public Response getRoomByCountryAndNameHotel(@QueryParam("country") String country, @QueryParam("nameHotel") String nameHotel) {
         LOGGER.info("Fetching room information for country: {}, hotel name: {}", country, nameHotel);
         return roomApiClient.getRoomByCountryAndNameHotel(country, nameHotel);
     }   
