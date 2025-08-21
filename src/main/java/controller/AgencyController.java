@@ -130,21 +130,21 @@ public class AgencyController {
     }
 
     @DELETE
-    @Path("/delete/airline")
+    @Path("/delete/airline/{reservationId}")
     @Operation(summary = "Eliminar reserva de avión", responses = {
         @ApiResponse(responseCode = "200", description = "Reserva de avión eliminada")
     })
-    public Response deleteAirlineReservation(long reservationId) {
+    public Response deleteAirlineReservation(@PathParam("reservationId") long reservationId) {
         LOGGER.info("Deleting airline reservation with ID: {}", reservationId);
         return travelApiClient.deleteReservation(reservationId);
     }
 
     @DELETE
-    @Path("/delete/hotel")
+    @Path("/delete/hotel/{bookingId}")
     @Operation(summary = "Eliminar reserva de hotel", responses = {
         @ApiResponse(responseCode = "200", description = "Reserva de hotel eliminada")
     })
-    public Response deleteHotelBooking(long bookingId) {
+    public Response deleteHotelBooking(@PathParam("bookingId") long bookingId) {
         LOGGER.info("Deleting hotel booking with ID: {}", bookingId);
         return travelApiClient.deleteBooking(bookingId);
     }
