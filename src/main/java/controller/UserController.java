@@ -27,7 +27,6 @@ public class UserController {
     private UserApiClient api;
 
     @POST
-    @Path("/{id}")
     @Operation(
         summary = "Obtener usuario por ID",
         responses = {

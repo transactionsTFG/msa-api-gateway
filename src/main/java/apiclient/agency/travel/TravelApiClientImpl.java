@@ -7,6 +7,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import business.travel.TravelInfo;
 import business.travel.UpdateHotelBookingDTO;
 import business.travel.UpdateReservationBookingDTO;
 import business.travel.UpdateReservationDTO;
@@ -30,6 +31,26 @@ public class TravelApiClientImpl implements TravelApiClient {
     @Override
     public Response getTravelByIdUser(long idUser) {
         return this.client.target(PATH + "/user/" + idUser)
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+    }
+
+    @Override
+    public Response getListTravel(TravelInfo dto) {
+        return this.client.target(PATH + "/info")
+                .queryParam("countryOrigin", dto.getCountryOrigin())
+                .queryParam("countryDestination", dto.getCountryDestination())
+                .queryParam("cityOrigin", dto.getCityOrigin())
+                .queryParam("cityDestination", dto.getCityDestination())
+                .queryParam("dateOrigin", dto.getDateOrigin())
+                .queryParam("hotelName", dto.getHotelName())
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+    }
+
+    @Override
+    public Response getTravelByIdHotelAndIdFlight(long idHotel, long idFlight) {
+        return this.client.target(PATH + "/hotel-airline/" + idHotel + "/" + idFlight)
                 .request(MediaType.APPLICATION_JSON)
                 .get();
     }

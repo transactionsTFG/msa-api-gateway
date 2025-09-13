@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import apiclient.agency.travel.TravelApiClient;
+import business.travel.TravelInfo;
 import business.travel.UpdateHotelBookingDTO;
 import business.travel.UpdateReservationBookingDTO;
 import business.travel.UpdateReservationDTO;
@@ -17,6 +18,7 @@ import msa.commons.controller.agency.reservationbooking.CreateAirlineAndHotelRes
 import msa.commons.controller.hotel.booking.CreateHotelBookingDTO;
 
 import javax.ejb.EJB;
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -55,7 +57,7 @@ public class AgencyController {
 
     @GET
     @Path("/travel/user/{idUser}")
-     @Operation(
+    @Operation(
         summary = "Obtener viajes por ID de usuario",
         parameters = {
             @Parameter(name = "idUser", in = ParameterIn.PATH,	required = true, description = "Identificador del usuario")
@@ -67,6 +69,37 @@ public class AgencyController {
     public Response getTravelByIdUser(@PathParam("idUser") long idUser) {
         LOGGER.info("Fetching travel information for user ID: {}", idUser);
         return travelApiClient.getTravelByIdUser(idUser);
+    }
+
+    @GET
+    @Path("/hotel-airline/{hotelId}/{airlineId}")
+    @Operation(
+        summary = "Obtener viaje por ID de hotel y aerolinea",
+        parameters = {
+            @Parameter(name = "hotelId", in = ParameterIn.PATH, required = true, description = "Identificador del hotel"),
+            @Parameter(name = "airlineId", in = ParameterIn.PATH, required = true, description = "Identificador de la aerolinea")
+        },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Viaje encontrado"),
+            @ApiResponse(responseCode = "404", description = "Viaje no encontrado")
+        }
+    )
+    public Response getTravelByHotelAndAirline(@PathParam("hotelId") long hotelId, @PathParam("airlineId") long airlineId) {
+        LOGGER.info("Obteniendo viaje por ID de hotel y aerolinea: {}, {}", hotelId, airlineId);
+        return travelApiClient.getTravelByIdHotelAndIdFlight(hotelId, airlineId);
+    }
+
+    @GET
+    @Path("/list")
+    @Operation(
+        summary = "Obtener lista de viajes de Hotel con Aerolinea",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Lista de viajes obtenida")
+        }
+    )
+    public Response getTravelList(@BeanParam TravelInfo travelInfo) {
+        LOGGER.info("Fetching travel list");
+        return travelApiClient.getListTravel(travelInfo);
     }
 
     @POST
