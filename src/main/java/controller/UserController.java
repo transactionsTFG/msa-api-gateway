@@ -28,7 +28,7 @@ public class UserController {
 
     @POST
     @Operation(
-        summary = "Obtener usuario por ID",
+        summary = "Obtener usuario por Email y Password",
         responses = {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "No encontrado")

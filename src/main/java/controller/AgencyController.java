@@ -42,15 +42,12 @@ public class AgencyController {
     @Path("/travel/{id}")
     @Operation(
         summary = "Obtener viaje por ID",
-        parameters = {
-            @Parameter(name = "id", in = ParameterIn.PATH, required = true, description = "Identificador del viaje")
-        },
         responses = {
             @ApiResponse(responseCode = "200", description = "Viaje encontrado"),
             @ApiResponse(responseCode = "404", description = "Viaje no encontrado")
         }
     )
-    public Response getTravelById(@PathParam("id") long id) {
+    public Response getTravelById(@Parameter(name = "id", in = ParameterIn.PATH, required = true, description = "Identificador del viaje") @PathParam("id") long id) {
         LOGGER.info("Fetching travel information for ID: {}", id);
         return travelApiClient.getTravelById(id);
     }
@@ -59,14 +56,11 @@ public class AgencyController {
     @Path("/travel/user/{idUser}")
     @Operation(
         summary = "Obtener viajes por ID de usuario",
-        parameters = {
-            @Parameter(name = "idUser", in = ParameterIn.PATH,	required = true, description = "Identificador del usuario")
-        },
         responses = {
             @ApiResponse(responseCode = "200", description = "Lista de viajes obtenida")
         }
     )
-    public Response getTravelByIdUser(@PathParam("idUser") long idUser) {
+    public Response getTravelByIdUser(@Parameter(name = "idUser", in = ParameterIn.PATH, required = true, description = "Identificador del usuario") @PathParam("idUser") long idUser) {
         LOGGER.info("Fetching travel information for user ID: {}", idUser);
         return travelApiClient.getTravelByIdUser(idUser);
     }
@@ -75,16 +69,14 @@ public class AgencyController {
     @Path("/hotel-airline/{hotelId}/{airlineId}")
     @Operation(
         summary = "Obtener viaje por ID de hotel y aerolinea",
-        parameters = {
-            @Parameter(name = "hotelId", in = ParameterIn.PATH, required = true, description = "Identificador del hotel"),
-            @Parameter(name = "airlineId", in = ParameterIn.PATH, required = true, description = "Identificador de la aerolinea")
-        },
         responses = {
             @ApiResponse(responseCode = "200", description = "Viaje encontrado"),
             @ApiResponse(responseCode = "404", description = "Viaje no encontrado")
         }
     )
-    public Response getTravelByHotelAndAirline(@PathParam("hotelId") long hotelId, @PathParam("airlineId") long airlineId) {
+    public Response getTravelByHotelAndAirline(
+        @Parameter(name = "hotelId", in = ParameterIn.PATH, required = true, description = "Identificador del hotel") @PathParam("hotelId") long hotelId, 
+        @Parameter(name = "airlineId", in = ParameterIn.PATH, required = true, description = "Identificador de la aerolinea") @PathParam("airlineId") long airlineId) {
         LOGGER.info("Obteniendo viaje por ID de hotel y aerolinea: {}, {}", hotelId, airlineId);
         return travelApiClient.getTravelByIdHotelAndIdFlight(hotelId, airlineId);
     }
@@ -114,7 +106,7 @@ public class AgencyController {
 
     @POST
     @Path("/create/hotel")
-     @Operation(summary = "Crear reserva de hotel", responses = {
+    @Operation(summary = "Crear reserva de hotel", responses = {
         @ApiResponse(responseCode = "201", description = "Reserva de hotel creada")
     })
     public Response createHotelReservation(CreateHotelBookingDTO dto) {

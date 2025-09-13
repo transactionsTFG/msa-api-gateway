@@ -33,15 +33,12 @@ public class FlightController {
     @Path("/{id}")
     @Operation(
         summary = "Obtener vuelo por ID",
-        parameters = {
-            @Parameter(name = "id", in = ParameterIn.PATH, required = true, description = "Identificador del vuelo")
-        },
         responses = {
             @ApiResponse(responseCode = "200", description = "Vuelo encontrado"),
             @ApiResponse(responseCode = "404", description = "Vuelo no encontrado")
         }
     )
-    public Response getFlightById(@PathParam("id") long id) {
+    public Response getFlightById(@Parameter(name = "id", in = ParameterIn.PATH, required = true, description = "Identificador del vuelo") @PathParam("id") long id) {
         LOGGER.info("Fetching flight information for ID: {}", id);
         return flightApiClient.getFlightById(id);
     }
@@ -50,15 +47,12 @@ public class FlightController {
     @Path("/instance/{id}")
     @Operation(
         summary = "Obtener instancia de vuelo por ID",
-        parameters = {
-            @Parameter(name = "id", in = ParameterIn.PATH, required = true, description = "Identificador de la instancia de vuelo")
-        },
         responses = {
             @ApiResponse(responseCode = "200", description = "Instancia encontrada"),
             @ApiResponse(responseCode = "404", description = "Instancia no encontrada")
         }
     )
-    public Response getFlightInstanceById(@PathParam("id") long id) {
+    public Response getFlightInstanceById(@Parameter(name = "id", in = ParameterIn.PATH, required = true, description = "Identificador de la instancia de vuelo") @PathParam("id") long id) {
         LOGGER.info("Fetching flight instance information for ID: {}", id);
         return flightApiClient.getFlightInstanceById(id);
     }

@@ -33,15 +33,12 @@ public class ReservationController {
     @Path("/{id}")
     @Operation(
         summary = "Obtener reserva por ID",
-        parameters = {
-            @Parameter(name = "id", in = ParameterIn.PATH, required = true, description = "Identificador de la reserva")
-        },
         responses = {
             @ApiResponse(responseCode = "200", description = "Reserva encontrada"),
             @ApiResponse(responseCode = "404", description = "Reserva no encontrada")
         }
     )
-    public Response getReservation(@PathParam("id") long id) {
+    public Response getReservation(@Parameter(name = "id", in = ParameterIn.PATH, required = true, description = "Identificador de la reserva") @PathParam("id") long id) {
         LOGGER.info("Fetching reservation with id: {}", id);
         return reservationApiClient.getReservationById(id);
     }

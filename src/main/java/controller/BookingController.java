@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Path("/booking")
-@Tag(name = "Reservas", description = "Operaciones sobre reservas de hotel")
+@Tag(name = "Booking", description = "Operaciones sobre reservas de hotel")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class BookingController {
@@ -31,15 +31,12 @@ public class BookingController {
     @Path("/{id}")
     @Operation(
         summary = "Obtener reserva por ID",
-        parameters = {
-            @Parameter(name = "id", in = ParameterIn.PATH, required = true, description = "Identificador de la reserva")
-        },
         responses = {
             @ApiResponse(responseCode = "200", description = "Reserva encontrada"),
             @ApiResponse(responseCode = "404", description = "Reserva no encontrada")
         }
     )
-    public Response getBookingById(@PathParam("id") long id) {
+    public Response getBookingById(@Parameter(name = "id", in = ParameterIn.PATH, required = true, description = "Identificador de la reserva") @PathParam("id") long id) {
         LOGGER.info("Fetching booking information for ID: {}", id);
         return bookingApiClient.getBookingById(id);
     }
