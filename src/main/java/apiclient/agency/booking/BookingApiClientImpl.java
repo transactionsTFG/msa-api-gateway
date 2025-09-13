@@ -10,7 +10,7 @@ import consts.HttpsConsts;
 
 @Stateless
 public class BookingApiClientImpl implements BookingApiClient {
-    private static final String PATH = HttpsConsts.URL_AGENCY  + "/msa-hotel-booking/api/reservation";
+    private static final String PATH = HttpsConsts.URL_AGENCY  + "/msa-hotel-booking/api/booking";
     private Client client;
 
     @Override

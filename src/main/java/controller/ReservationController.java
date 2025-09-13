@@ -1,7 +1,8 @@
 package controller;
 
-import java.util.List;
 
+import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -41,6 +42,11 @@ public class ReservationController {
     public Response getReservation(@Parameter(name = "id", in = ParameterIn.PATH, required = true, description = "Identificador de la reserva") @PathParam("id") long id) {
         LOGGER.info("Fetching reservation with id: {}", id);
         return reservationApiClient.getReservationById(id);
+    }
+
+    @EJB
+    public void setReservationApiClient(ReservationApiClient reservationApiClient) {
+        this.reservationApiClient = reservationApiClient;
     }
 
 }

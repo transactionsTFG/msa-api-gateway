@@ -1,6 +1,6 @@
 package controller;
 
-import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -41,7 +41,7 @@ public class BookingController {
         return bookingApiClient.getBookingById(id);
     }
 
-    @Inject
+    @EJB
     public void setBookingApiClient(BookingApiClient bookingApiClient) {
         this.bookingApiClient = bookingApiClient;
     }
