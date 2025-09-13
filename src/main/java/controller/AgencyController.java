@@ -155,33 +155,33 @@ public class AgencyController {
     }
 
     @DELETE
-    @Path("/delete/airline/{reservationId}")
+    @Path("/delete/airline/{travelId}/{reservationId}")
     @Operation(summary = "Eliminar reserva de avión", responses = {
         @ApiResponse(responseCode = "200", description = "Reserva de avión eliminada")
     })
-    public Response deleteAirlineReservation(@PathParam("reservationId") long reservationId) {
-        LOGGER.info("Deleting airline reservation with ID: {}", reservationId);
-        return travelApiClient.deleteReservation(reservationId);
+    public Response deleteAirlineReservation(@PathParam("travelId") long travelId, @PathParam("reservationId") long reservationId) {
+        LOGGER.info("Deleting airline reservation with ID: {} for travel ID: {}", reservationId, travelId);
+        return travelApiClient.deleteReservation(travelId, reservationId);
     }
 
     @DELETE
-    @Path("/delete/hotel/{bookingId}")
+    @Path("/delete/hotel/{travelId}/{bookingId}")
     @Operation(summary = "Eliminar reserva de hotel", responses = {
         @ApiResponse(responseCode = "200", description = "Reserva de hotel eliminada")
     })
-    public Response deleteHotelBooking(@PathParam("bookingId") long bookingId) {
-        LOGGER.info("Deleting hotel booking with ID: {}", bookingId);
-        return travelApiClient.deleteBooking(bookingId);
+    public Response deleteHotelBooking(@PathParam("travelId") long travelId, @PathParam("bookingId") long bookingId) {
+        LOGGER.info("Deleting hotel booking with ID: {} for travel ID: {}", bookingId, travelId);
+        return travelApiClient.deleteBooking(travelId, bookingId);
     }
 
     @DELETE
-    @Path("/delete/hotel-airline/{reservationId}/{bookingId}")
+    @Path("/delete/hotel-airline/{travelId}/{reservationId}/{bookingId}")
     @Operation(summary = "Eliminar reserva combinada hotel + avión", responses = {
         @ApiResponse(responseCode = "200", description = "Reserva combinada eliminada")
     })
-    public Response deleteAirlineAndHotelReservation(@PathParam("reservationId") long reservationId, @PathParam("bookingId") long bookingId) {
-        LOGGER.info("Deleting airline reservation with ID: {} and hotel booking with ID: {}", reservationId, bookingId);
-        return travelApiClient.deleteReservationAndBooking(reservationId, bookingId);
+    public Response deleteAirlineAndHotelReservation(@PathParam("travelId") long travelId, @PathParam("reservationId") long reservationId, @PathParam("bookingId") long bookingId) {
+        LOGGER.info("Deleting airline reservation with ID: {} and hotel booking with ID: {} for travel ID: {}", reservationId, bookingId, travelId);
+        return travelApiClient.deleteReservationAndBooking(travelId, reservationId, bookingId);
     }
 
     @EJB

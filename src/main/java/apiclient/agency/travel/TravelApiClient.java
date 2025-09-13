@@ -21,7 +21,7 @@ public interface TravelApiClient {
     Response updateReservation(UpdateReservationDTO dto);
     Response updateBooking(UpdateHotelBookingDTO dto);
     Response updateReservationAndBooking(UpdateReservationBookingDTO dto);
-    Response deleteReservation(long id);
-    Response deleteBooking(long  id);
-    Response deleteReservationAndBooking(long idReservation, long idBooking);
+    Response deleteReservation(long idTravel, long id);
+    Response deleteBooking(long idTravel, long id);
+    Response deleteReservationAndBooking(long idTravel, long idReservation, long idBooking);
 }

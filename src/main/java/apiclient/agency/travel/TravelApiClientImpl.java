@@ -98,22 +98,22 @@ public class TravelApiClientImpl implements TravelApiClient {
     }
 
     @Override
-    public Response deleteReservation(long id) {
-        return this.client.target(PATH + "/airline/" + id)
+    public Response deleteReservation(long idTravel, long id) {
+        return this.client.target(PATH + "/airline/" + idTravel + "/" + id)
                 .request(MediaType.APPLICATION_JSON)
                 .delete();
     }
 
     @Override
-    public Response deleteBooking(long id) {
-        return this.client.target(PATH + "/hotel/" + id)
+    public Response deleteBooking(long idTravel, long id) {
+        return this.client.target(PATH + "/hotel/" + idTravel + "/" + id)
                 .request(MediaType.APPLICATION_JSON)
                 .delete();
     }
 
     @Override
-    public Response deleteReservationAndBooking(long idReservation, long idBooking) {
-        return this.client.target(PATH + "/hotel-airline" + "/" + idReservation + "/" + idBooking)
+    public Response deleteReservationAndBooking(long idTravel, long idReservation, long idBooking) {
+        return this.client.target(PATH + "/hotel-airline" + "/" + idTravel + "/" + idReservation + "/" + idBooking)
                 .request(MediaType.APPLICATION_JSON)
                 .delete();
     }
